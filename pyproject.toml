@@ -1,0 +1,92 @@
+[project]
+name = "callish"
+version = "0.1.0"
+description = "Django QuerySet façade for user-written API adapters."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "BSD-3-Clause" }
+authors = [{ name = "callish contributors" }]
+keywords = ["django", "api", "queryset", "modelform", "adapter"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Django",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = ["django>=5.0,<7.0"]
+
+[project.urls]
+Homepage = "https://github.com/Technology-Company/callish"
+Issues = "https://github.com/Technology-Company/callish/issues"
+
+[project.entry-points.pytest11]
+callish = "callish.testing.plugin"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = true
+packages = [{ include = "callish", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+django = ">=5.0,<7.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8,<9"
+pytest-django = ">=4.8"
+ruff = ">=0.6"
+mypy = ">=1.10"
+
+# Opt-in: `poetry install --with compat` to run the Wagtail coexistence smoke test.
+[tool.poetry.group.compat]
+optional = true
+
+[tool.poetry.group.compat.dependencies]
+wagtail = ">=6.0,<8.0"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+addopts = "-ra"
+python_files = ["test_*.py"]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:django.*",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "W"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unreachable = true
+ignore_missing_imports = true
+files = ["src/callish"]

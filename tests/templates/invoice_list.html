@@ -1,0 +1,5 @@
+{% for invoice in invoices %}
+<div class="invoice" data-pk="{{ invoice.pk }}">{{ invoice.number }} — {{ invoice.amount_cents }} — paid={{ invoice.paid }}</div>
+{% empty %}
+<p>no invoices</p>
+{% endfor %}
