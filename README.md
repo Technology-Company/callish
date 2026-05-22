@@ -8,8 +8,6 @@ and admin register/instantiation keep working — **without** trying to
 standardise the HTTP shape. You write the adapter (`list / retrieve / create /
 update / delete`); `callish` wires it into Django.
 
-Status: **0.x**, adapter contract is still in flux. 1.0 freezes it.
-
 ## Why
 
 Existing libraries either lock you into a specific HTTP shape
