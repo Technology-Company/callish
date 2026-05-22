@@ -151,6 +151,23 @@ bare-class form does `isinstance(model, ModelBase)` and falls into iteration).
 `ModelAdmin` instances construct fine. **Changelist is a non-goal per spec**
 — admin's changelist machinery assumes a real Django Model with a DB table.
 
+## Pre-commit checklist
+
+Run these before every `git commit`. CI runs the same three commands across
+the Django 5 + Wagtail 6 and Django 6 + Wagtail 7 matrix — catching issues
+locally first keeps CI green and avoids spending workflow minutes on trivial
+lint pushes.
+
+```bash
+poetry run ruff check src tests --fix              # auto-fix what's fixable
+poetry run mypy src/callish                        # type check
+poetry run pytest                                  # full test suite
+```
+
+If `ruff --fix` modified any file, stage those changes (`git add -u`) before
+committing. If `mypy` or `pytest` is red, fix it; do not commit and push to
+let CI surface it.
+
 ## Running tests
 
 ```bash
