@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel in-progress runs on the same ref to save minutes on rapid pushes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Django 5.x + Wagtail 6.x
+            django: "5.2.*"
+            wagtail: "6.4.*"
+          - name: Django 6.x + Wagtail 7.x
+            django: "6.0.*"
+            wagtail: "7.4.*"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry install --with dev --no-interaction
+          poetry run pip install "django==${{ matrix.django }}" "wagtail==${{ matrix.wagtail }}"
+
+      - name: Lint, type-check, test
+        run: |
+          poetry run ruff check src tests
+          poetry run mypy src/callish
+          poetry run pytest -ra
