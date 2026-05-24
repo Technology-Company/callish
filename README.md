@@ -1,5 +1,11 @@
 # callish
 
+[![PyPI version](https://img.shields.io/pypi/v/callish.svg)](https://pypi.org/project/callish/)
+[![Python versions](https://img.shields.io/pypi/pyversions/callish.svg)](https://pypi.org/project/callish/)
+[![Django versions](https://img.shields.io/badge/django-5.0%20%7C%205.1%20%7C%205.2%20%7C%206.0-44B78B.svg)](https://pypi.org/project/callish/)
+[![CI](https://github.com/Technology-Company/callish/actions/workflows/ci.yml/badge.svg)](https://github.com/Technology-Company/callish/actions/workflows/ci.yml)
+[![License](https://img.shields.io/pypi/l/callish.svg)](https://pypi.org/project/callish/)
+
 **Django QuerySet façade for user-written API adapters.**
 
 `callish` lets a Django app expose data living behind an arbitrary API as if
